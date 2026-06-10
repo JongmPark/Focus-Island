@@ -1,0 +1,6 @@
+{
+  "name": "Focus Island",
+  "description": "A beautiful, minimalist routine tracker and widgets app styled after MUJI, featuring smart insights, progress tracking, habit analytics, and home screen widgets to keep you focused.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

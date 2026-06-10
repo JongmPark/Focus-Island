@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">포커스 아일랜드</string>
+    <string name="app_title">포커스 아일랜드 (Focus Island)</string>
+    <string name="today_progress">오늘의 달성률</string>
+    <string name="no_routines">오늘 진행할 루틴이 없습니다. 아래에서 새 루틴을 생성해 보세요!</string>
+    <string name="add_routine">새 루틴 추가</string>
+    <string name="complete_toast">루틴 달성 성공! 나만의 포커스 아일랜드를 무럭무럭 키워보세요 ✨</string>
+    <string name="remove_ads">광고 제거 및 프리미엄 업그레이드</string>
+    <string name="premium_active">프리미엄 활성화 완료 🌟 (광고 제거 및 위젯 무제한)</string>
+    <string name="stats_title">아일랜드 통계 및 분석</string>
+    <string name="routine_placeholder">예: 독서 15분, 물 2L 마시기, 명상하기...</string>
+    <string name="delete_routine">루틴 삭제</string>
+    <string name="routine_color">루틴 색상 지정</string>
+    <string name="create_routine_btn">루틴 생성하기</string>
+    <string name="congrats_all_done">오늘의 모든 루틴을 완료했습니다! 전면 광고 배너 노출됨 (프리미엄 제외) 🏝️</string>
+</resources>

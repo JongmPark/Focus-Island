@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Focus Island</string>
+    <string name="app_title">Focus Island</string>
+    <string name="today_progress">Today\'s Progress</string>
+    <string name="no_routines">No routines today. Create a routine below!</string>
+    <string name="add_routine">New Routine</string>
+    <string name="complete_toast">Routine checked! Keep growing your Focus Island ✨</string>
+    <string name="remove_ads">Remove Ads (Premium)</string>
+    <string name="premium_active">Premium Active 🌟 (Ad-Free &amp; Unlimited Widgets)</string>
+    <string name="stats_title">Island Analytics</string>
+    <string name="routine_placeholder">e.g. Read for 15 mins, Drink Water...</string>
+    <string name="delete_routine">Delete Routine</string>
+    <string name="routine_color">Color Tag</string>
+    <string name="create_routine_btn">Create Routine</string>
+    <string name="congrats_all_done">All routines completed! Interstitial ad shown (if not Premium) 🏝️</string>
+</resources>
