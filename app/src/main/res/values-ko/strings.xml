@@ -14,4 +14,7 @@
     <string name="routine_color">루틴 색상 지정</string>
     <string name="create_routine_btn">루틴 생성하기</string>
     <string name="congrats_all_done">오늘의 모든 루틴을 완료했습니다! 전면 광고 배너 노출됨 (프리미엄 제외) 🏝️</string>
+    <string name="my_routines_header">나의 루틴</string>
+    <string name="cancel_btn">취소</string>
+    <string name="upgrade_premium_btn">포커스 프리미엄 업그레이드 ($0 - 무료 체험)</string>
 </resources>

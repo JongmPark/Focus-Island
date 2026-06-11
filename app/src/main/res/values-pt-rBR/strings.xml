@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Focus Island</string>
+    <string name="app_title">Focus Island</string>
+    <string name="today_progress">Progresso de Hoje</string>
+    <string name="no_routines">Sem rotinas hoje. Crie uma rotina abaixo!</string>
+    <string name="add_routine">Nova Rotina</string>
+    <string name="complete_toast">Rotina marcada! Continue cultivando sua Ilha de Foco ✨</string>
+    <string name="remove_ads">Remover Anúncios (Premium)</string>
+    <string name="premium_active">Premium Ativo 🌟 (Sem Anúncios e Widgets Ilimitados)</string>
+    <string name="stats_title">Análise da Ilha</string>
+    <string name="routine_placeholder">Ex. Ler por 15 min, Beber água...</string>
+    <string name="delete_routine">Excluir Rotina</string>
+    <string name="routine_color">Cor da Etiqueta</string>
+    <string name="create_routine_btn">Criar Rotina</string>
+    <string name="congrats_all_done">Todas as rotinas concluídas! Anúncio intersticial exibido 🏝️</string>
+    <string name="my_routines_header">Minhas Rotinas</string>
+    <string name="cancel_btn">Cancelar</string>
+    <string name="upgrade_premium_btn">Atualizar para Focus Premium ($0 - Teste Grátis)</string>
+</resources>

@@ -36,10 +36,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.content.Context
+import android.content.res.Configuration
+import java.util.Locale
+import kotlinx.coroutines.launch
 import androidx.compose.ui.window.Dialog
 import com.example.R
 import com.example.data.Routine
 import com.example.ui.theme.*
+
+private fun getLocalizedContext(context: Context, langCode: String): Context {
+    val locale = Locale(langCode)
+    Locale.setDefault(locale)
+    val config = Configuration(context.resources.configuration)
+    config.setLocale(locale)
+    return context.createConfigurationContext(config)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,73 +62,222 @@ fun RoutineListScreen(
     val routines by viewModel.allRoutines.collectAsState()
     val isPremium by viewModel.isPremium.collectAsState()
     val showInterstitial by viewModel.interstitialTriggerState.collectAsState()
+    val selectedLang by viewModel.selectedLanguage.collectAsState()
 
-    val context = LocalContext.current
-    val haptic = LocalHapticFeedback.current
+    val rawContext = LocalContext.current
+    val localizedContext = remember(selectedLang) {
+        getLocalizedContext(rawContext, selectedLang)
+    }
 
-    var showAddDialog by remember { mutableStateOf(false) }
+    CompositionLocalProvider(LocalContext provides localizedContext) {
+        val context = LocalContext.current
+        val haptic = LocalHapticFeedback.current
 
-    // Statistics calculations
-    val totalRoutines = routines.size
-    val completedRoutines = routines.count { it.isCompleted }
-    val progress = if (totalRoutines > 0) completedRoutines.toFloat() / totalRoutines else 0f
-    val remainingRoutines = totalRoutines - completedRoutines
+        var showAddDialog by remember { mutableStateOf(false) }
 
-    // Smooth animator for progress indicator bar
-    val smoothProgress by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = spring(stiffness = Spring.StiffnessLow),
-        label = "ProgressBarAnimation"
-    )
+        // Statistics calculations
+        val totalRoutines = routines.size
+        val completedRoutines = routines.count { it.isCompleted }
+        val progress = if (totalRoutines > 0) completedRoutines.toFloat() / totalRoutines else 0f
+        val remainingRoutines = totalRoutines - completedRoutines
 
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+        // Smooth animator for progress indicator bar
+        val smoothProgress by animateFloatAsState(
+            targetValue = progress,
+            animationSpec = spring(stiffness = Spring.StiffnessLow),
+            label = "ProgressBarAnimation"
+        )
+
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        val scope = rememberCoroutineScope()
+
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet(
+                    drawerContainerColor = Color.White,
+                    drawerShape = RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp),
+                    modifier = Modifier.width(300.dp)
+                ) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.Terrain,
                             contentDescription = "Island Icon",
                             tint = FocusSagePrimary,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(32.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.app_title),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = MujiDarkText,
-                            modifier = Modifier.testTag("app_title_text")
-                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
+                            Text(
+                                text = "Focus Island 🏝️",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp,
+                                color = MujiDarkText
+                            )
+                            Text(
+                                text = "Choose Language / 언어 선택",
+                                fontSize = 11.sp,
+                                color = MujiGrayText
+                            )
+                        }
                     }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            viewModel.togglePremium()
-                            val msg = if (!isPremium) {
-                                "Premium Upgrade Success! 🌟 Ads Removed & Unlimited Widgets."
-                            } else {
-                                "Demo Premium deactivated."
+                    Spacer(modifier = Modifier.height(20.dp))
+                    HorizontalDivider(color = MujiBorder, modifier = Modifier.padding(horizontal = 16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Language / 언어",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MujiGrayText,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp)
+                    )
+                    var expanded by remember { mutableStateOf(false) }
+                    val languages = listOf(
+                        "ko" to "🇰🇷 한국어",
+                        "en" to "🇺🇸 English",
+                        "es" to "🇲🇽 Español",
+                        "pt" to "🇧🇷 Português",
+                        "id" to "🇮🇩 Bahasa Indonesia",
+                        "th" to "🇹🇭 ภาษาไทย",
+                        "vi" to "🇻🇳 Tiếng Việt"
+                    )
+                    val currentLangLabel = languages.firstOrNull { it.first == selectedLang }?.second ?: "🇰🇷 한국어"
+                    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(MujiLightGray)
+                                .clickable { expanded = true }
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = currentLangLabel, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = MujiDarkText)
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = "Select Language",
+                                tint = MujiGrayText
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier
+                                .fillMaxWidth(0.65f)
+                                .background(Color.White)
+                                .border(1.dp, MujiBorder, RoundedCornerShape(12.dp))
+                        ) {
+                            languages.forEach { (code, label) ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Text(
+                                                text = label,
+                                                color = MujiDarkText,
+                                                fontSize = 14.sp,
+                                                fontWeight = if (selectedLang == code) FontWeight.Bold else FontWeight.Normal
+                                            )
+                                            if (selectedLang == code) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Check,
+                                                    contentDescription = "Active",
+                                                    tint = FocusSagePrimary,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                            }
+                                        }
+                                    },
+                                    onClick = {
+                                        viewModel.selectLanguage(code)
+                                        expanded = false
+                                        scope.launch { drawerState.close() }
+                                    }
+                                )
                             }
-                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                        },
-                        modifier = Modifier.testTag("premium_toggle_btn")
-                    ) {
-                        Icon(
-                            imageVector = if (isPremium) Icons.Filled.Star else Icons.Outlined.StarBorder,
-                            contentDescription = "Toggle Premium Mode",
-                            tint = if (isPremium) Color(0xFFF1C40F) else MujiGrayText
-                        )
+                        }
                     }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
-            )
-        },
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = "Focus Island v1.2",
+                        fontSize = 11.sp,
+                        color = MujiGrayText.copy(alpha = 0.6f),
+                        modifier = Modifier.padding(24.dp).align(Alignment.CenterHorizontally)
+                    )
+                }
+            },
+            content = {
+                Scaffold(
+                    modifier = modifier.fillMaxSize(),
+                    containerColor = MaterialTheme.colorScheme.background,
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            navigationIcon = {
+                                IconButton(
+                                    onClick = {
+                                        scope.launch { drawerState.open() }
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Menu,
+                                        contentDescription = "Open Sidebar Menu",
+                                        tint = MujiDarkText
+                                    )
+                                }
+                            },
+                            title = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Terrain,
+                                        contentDescription = "Island Icon",
+                                        tint = FocusSagePrimary,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = stringResource(R.string.app_title),
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 20.sp,
+                                        color = MujiDarkText,
+                                        modifier = Modifier.testTag("app_title_text")
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(
+                                    onClick = {
+                                        viewModel.togglePremium()
+                                        val msg = if (!isPremium) {
+                                            "Premium Upgrade Success! 🌟 Ads Removed & Unlimited Widgets."
+                                        } else {
+                                            "Demo Premium deactivated."
+                                        }
+                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                    },
+                                    modifier = Modifier.testTag("premium_toggle_btn")
+                                ) {
+                                    Icon(
+                                        imageVector = if (isPremium) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                                        contentDescription = "Toggle Premium Mode",
+                                        tint = if (isPremium) Color(0xFFF1C40F) else MujiGrayText
+                                    )
+                                }
+                            },
+                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.background
+                            )
+                        )
+                    },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -265,7 +426,7 @@ fun RoutineListScreen(
                 // Analytics Status Quick Indicator
                 item {
                     Text(
-                        text = "My Routines",
+                        text = stringResource(R.string.my_routines_header),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = MujiDarkText,
@@ -459,12 +620,15 @@ fun RoutineListScreen(
                             shape = RoundedCornerShape(50),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Upgrade to Focus Premium ($0 - Free Trial)", color = Color.White)
+                            Text(stringResource(R.string.upgrade_premium_btn), color = Color.White)
                         }
                     }
                 }
             }
         }
+    }
+}
+        )
     }
 }
 
@@ -903,7 +1067,7 @@ fun AddRoutineDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel", color = MujiGrayText)
+                        Text(stringResource(R.string.cancel_btn), color = MujiGrayText)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(

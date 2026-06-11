@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <!-- Vertical line divider -->
-    <View
+    <FrameLayout
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="#E5E5E7"

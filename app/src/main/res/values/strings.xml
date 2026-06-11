@@ -13,4 +13,7 @@
     <string name="routine_color">Color Tag</string>
     <string name="create_routine_btn">Create Routine</string>
     <string name="congrats_all_done">All routines completed! Interstitial ad shown (if not Premium) 🏝️</string>
+    <string name="my_routines_header">My Routines</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="upgrade_premium_btn">Upgrade to Focus Premium ($0 - Free Trial)</string>
 </resources>

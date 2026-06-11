@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Focus Island</string>
+    <string name="app_title">Focus Island</string>
+    <string name="today_progress">Tiến độ hôm nay</string>
+    <string name="no_routines">Hôm nay không có thói quen. Tạo thói quen bên dưới!</string>
+    <string name="add_routine">Thói quen mới</string>
+    <string name="complete_toast">Đã đánh dấu thói quen! Hãy tiếp tục phát triển Đảo Tập Trung của bạn ✨</string>
+    <string name="remove_ads">Xóa quảng cáo (Premium)</string>
+    <string name="premium_active">Premium đang hoạt động 🌟 (Không quảng cáo &amp; Widget vô hạn)</string>
+    <string name="stats_title">Phân tích Đảo</string>
+    <string name="routine_placeholder">Ví dụ: đọc sách 15 phút, uống nước...</string>
+    <string name="delete_routine">Xóa thói quen</string>
+    <string name="routine_color">Màu thẻ</string>
+    <string name="create_routine_btn">Tạo thói quen</string>
+    <string name="congrats_all_done">Đã hoàn thành mọi thói quen! Quảng cáo chuyển tiếp được hiển thị 🏝️</string>
+    <string name="my_routines_header">Thói quen của tôi</string>
+    <string name="cancel_btn">Hủy bỏ</string>
+    <string name="upgrade_premium_btn">Nâng cấp lên Focus Premium ($0 - Dùng thử miễn phí)</string>
+</resources>

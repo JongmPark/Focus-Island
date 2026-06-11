@@ -34,6 +34,15 @@ class RoutineViewModel(application: Application) : AndroidViewModel(application)
     private val _interstitialTriggerState = MutableStateFlow(false)
     val interstitialTriggerState: StateFlow<Boolean> = _interstitialTriggerState.asStateFlow()
 
+    // Selected language, default to "ko" (Korean)
+    private val _selectedLanguage = MutableStateFlow(sharedPrefs.getString("selected_language", "ko") ?: "ko")
+    val selectedLanguage: StateFlow<String> = _selectedLanguage.asStateFlow()
+
+    fun selectLanguage(langCode: String) {
+        _selectedLanguage.value = langCode
+        sharedPrefs.edit().putString("selected_language", langCode).apply()
+    }
+
     init {
         val database = RoutineDatabase.getDatabase(application)
         repository = RoutineRepository(database.routineDao())

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Focus Island</string>
+    <string name="app_title">Focus Island</string>
+    <string name="today_progress">Kemajuan Hari Ini</string>
+    <string name="no_routines">Tidak ada rutinitas hari ini. Buat rutinitas di bawah!</string>
+    <string name="add_routine">Rutinitas Baru</string>
+    <string name="complete_toast">Rutinitas selesai! Teruskan mengembangkan Pulau Fokus Anda ✨</string>
+    <string name="remove_ads">Hapus Iklan (Premium)</string>
+    <string name="premium_active">Premium Aktif 🌟 (Bebas Iklan &amp; Widget Tanpa Batas)</string>
+    <string name="stats_title">Analisis Pulau</string>
+    <string name="routine_placeholder">Misal: Membaca 15 mnt, Minum Air...</string>
+    <string name="delete_routine">Hapus Rutinitas</string>
+    <string name="routine_color">Warna Label</string>
+    <string name="create_routine_btn">Buat Rutinitas</string>
+    <string name="congrats_all_done">Semua rutinitas selesai! Iklan interstitial ditampilkan 🏝️</string>
+    <string name="my_routines_header">Rutinitas Saya</string>
+    <string name="cancel_btn">Batal</string>
+    <string name="upgrade_premium_btn">Tingkatkan ke Focus Premium ($0 - Uji Coba Gratis)</string>
+</resources>

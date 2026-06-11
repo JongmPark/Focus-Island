@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Focus Island</string>
+    <string name="app_title">Focus Island</string>
+    <string name="today_progress">ความคืบหน้าวันนี้</string>
+    <string name="no_routines">วันนี้ไม่มีกิจวัตรประจำวัน สร้างมันที่ด้านล่าง!</string>
+    <string name="add_routine">กิจวัตรใหม่</string>
+    <string name="complete_toast">ทำกิจวัตรสำเร็จแล้ว! ช่วยให้เกาะโฟกัสของคุณเติบโตต่อไป ✨</string>
+    <string name="remove_ads">ลบโฆษณา (พรีเมียม)</string>
+    <string name="premium_active">เปิดใช้งานพรีเมียมแล้ว 🌟 (ไม่มีโฆษณา &amp; วิดเจ็ตไม่จำกัด)</string>
+    <string name="stats_title">ข้อมูลวิเคราะห์เกาะ</string>
+    <string name="routine_placeholder">เช่น อ่านหนังสือ 15 นาที, ดื่มน้ำ...</string>
+    <string name="delete_routine">ลบกิจวัตร</string>
+    <string name="routine_color">สีของแท็ก</string>
+    <string name="create_routine_btn">สร้างกิจวัตร</string>
+    <string name="congrats_all_done">ทำกิจวัตรครบทุกข้อแล้ว! โฆษณาคั่นหน้าจอปรากฏขึ้น 🏝️</string>
+    <string name="my_routines_header">กิจวัตรของฉัน</string>
+    <string name="cancel_btn">ยกเลิก</string>
+    <string name="upgrade_premium_btn">อัปเกรดเป็น Focus Premium ($0 - ทดลองใช้ฟรี)</string>
+</resources>
